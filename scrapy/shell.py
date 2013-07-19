@@ -5,6 +5,7 @@ See documentation in docs/topics/shell.rst
 """
 import signal
 
+# test remote
 from twisted.internet import reactor, threads
 from twisted.python import threadable
 from w3lib.url import any_to_uri
