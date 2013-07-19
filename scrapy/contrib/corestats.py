@@ -5,6 +5,8 @@ import datetime
 
 from scrapy import signals
 
+# 发现这些东西都是在crawler的signals上面注册，不知道有什么用？
+
 class CoreStats(object):
 
     def __init__(self, stats):

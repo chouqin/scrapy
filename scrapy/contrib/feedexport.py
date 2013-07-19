@@ -10,7 +10,7 @@ from datetime import datetime
 from urlparse import urlparse
 from ftplib import FTP
 
-from zope.interface import Interface, implements
+from zope.interface import Interface, implements # 类似于java的interface的概念吧
 from twisted.internet import defer, threads
 from w3lib.url import file_uri_to_path
 
