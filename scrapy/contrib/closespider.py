@@ -10,6 +10,10 @@ from twisted.internet import reactor
 
 from scrapy import signals
 
+# 现在知道一个crawler必须要有的属性：
+# signals.connnect
+# settings.getint getfloat...
+# engine
 
 class CloseSpider(object):
 
@@ -23,9 +27,9 @@ class CloseSpider(object):
             'errorcount': crawler.settings.getint('CLOSESPIDER_ERRORCOUNT'),
             }
 
-        self.counter = defaultdict(int)
+        self.counter = defaultdict(int) # 很方便的使用Python的dict
 
-        if self.close_on.get('errorcount'):
+        if self.close_on.get('errorcount'): # 使用dict的get方法？
             crawler.signals.connect(self.error_count, signal=signals.spider_error)
         if self.close_on.get('pagecount'):
             crawler.signals.connect(self.page_count, signal=signals.response_received)
@@ -53,6 +57,7 @@ class CloseSpider(object):
         self.task = reactor.callLater(self.close_on['timeout'], \
             self.crawler.engine.close_spider, spider, \
             reason='closespider_timeout')
+        # reactor.callLater到底在干嘛，还有twisted到底是些什么东西
 
     def item_scraped(self, item, spider):
         self.counter['itemcount'] += 1

@@ -4,6 +4,7 @@ if 'django' in optional_features:
     from django.core.exceptions import ValidationError
 
 
+# 这种Meta什么的，好难懂，先放一边。。。
 class DjangoItemMeta(ItemMeta):
 
     def  __new__(mcs, class_name, bases, attrs):
