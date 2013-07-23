@@ -57,7 +57,7 @@ def unique(list_, key=lambda x: x):
     result = []
     for item in list_:
         seenkey = key(item)
-        if seenkey in seen: 
+        if seenkey in seen:
             continue
         seen[seenkey] = 1
         result.append(item)
@@ -70,7 +70,8 @@ def str_to_unicode(text, encoding=None, errors='strict'):
     object without the risk of double-decoding problems (which can happen if
     you don't use the default 'ascii' encoding)
     """
-    
+
+    # set 'utf-8' as default value directly?
     if encoding is None:
         encoding = 'utf-8'
     if isinstance(text, str):

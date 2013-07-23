@@ -61,7 +61,7 @@ def walk_modules(path, load=False):
         for _, subpath, ispkg in iter_modules(mod.__path__):
             fullpath = path + '.' + subpath
             if ispkg:
-                mods += walk_modules(fullpath)
+                mods += walk_modules(fullpath) # +=和extends有什么区别，表现上没有什么区别
             else:
                 submod = __import__(fullpath, {}, {}, [''])
                 mods.append(submod)
