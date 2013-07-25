@@ -13,6 +13,13 @@ from scrapy.selector import XmlXPathSelector, HtmlXPathSelector
 from scrapy.exceptions import NotConfigured, NotSupported
 
 
+# 每一个spider都会实现一个parse函数，接受response作为参数，
+# 然后yield一个个response or item
+# 如果是item还好理解，如果yield出了response应该怎么处理
+# 这或许是不同的spider要干的事吧
+# 比如crawler会根据reponse的link去继续爬取
+# 而这些feed就不会了
+
 class XMLFeedSpider(BaseSpider):
     """
     This class intends to be the base class for spiders that scrape
@@ -104,7 +111,7 @@ class CSVFeedSpider(BaseSpider):
     delimiter = None # When this is None, python's csv module's default delimiter is used
     headers = None
 
-    def process_results(self, response, results):
+    def process_results(self, response, results): # 其中result必须是一个list
         """This method has the same purpose as the one in XMLFeedSpider"""
         return results
 

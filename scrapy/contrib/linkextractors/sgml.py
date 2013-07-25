@@ -87,7 +87,7 @@ class BaseSgmlLinkExtractor(FixedSGMLParser):
 
 _re_type = type(re.compile("", 0))
 
-_matches = lambda url, regexs: any((r.search(url) for r in regexs))
+_matches = lambda url, regexs: any((r.search(url) for r in regexs)) # any是个好函数
 _is_valid_url = lambda url: url.split('://', 1)[0] in set(['http', 'https', 'file'])
 
 

@@ -1,9 +1,12 @@
 from scrapy.spider import BaseSpider
 from scrapy.utils.spider import iterate_spider_output
 
+# 在初始化spider时需要执行request？
+# 好像还不是很好懂
+
 class InitSpider(BaseSpider):
     """Base Spider with initialization facilities"""
-    
+
     def start_requests(self):
         self._postinit_reqs = super(InitSpider, self).start_requests()
         return iterate_spider_output(self.init_request())
@@ -20,8 +23,8 @@ class InitSpider(BaseSpider):
         is called this spider is considered initialized. If you need to perform
         several requests for initializing your spider, you can do so by using
         different callbacks. The only requirement is that the final callback
-        (of the last initialization request) must be self.initialized. 
-        
+        (of the last initialization request) must be self.initialized.
+
         The default implementation calls self.initialized immediately, and
         means that no initialization is needed. This method should be
         overridden only when you need to perform requests to initialize your

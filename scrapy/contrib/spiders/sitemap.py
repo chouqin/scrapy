@@ -61,10 +61,13 @@ class SitemapSpider(BaseSpider):
             return gunzip(response.body)
 
 def regex(x):
-    if isinstance(x, basestring):
+    if isinstance(x, basestring): # str和basestring有什么区别, basestring还包含了unicode
         return re.compile(x)
     return x
 
 def iterloc(it):
     for d in it:
         yield d['loc']
+
+    # 使用yield相对于返回一个list，能够节省大量的内存
+    # 对于迭代器来说，大量使用yield有好处

@@ -47,16 +47,17 @@ class CrawlSpider(BaseSpider):
     def _requests_to_follow(self, response):
         if not isinstance(response, HtmlResponse):
             return
-        seen = set()
+        seen = set() # 通过这种方式记录是否出现过，管用吗？好像没用
         for n, rule in enumerate(self._rules):
             links = [l for l in rule.link_extractor.extract_links(response) if l not in seen]
             if links and rule.process_links:
                 links = rule.process_links(links)
             seen = seen.union(links)
             for link in links:
-                r = Request(url=link.url, callback=self._response_downloaded)
+                r = Request(url=link.url, callback=self._response_downloaded) # 什么时候调用这个callback?
                 r.meta.update(rule=n, link_text=link.text)
                 yield rule.process_request(r)
+            # 一个rule是什么东西，meta,process_request
 
     def _response_downloaded(self, response):
         rule = self._rules[response.meta['rule']]
@@ -80,7 +81,7 @@ class CrawlSpider(BaseSpider):
             elif isinstance(method, basestring):
                 return getattr(self, method, None)
 
-        self._rules = [copy.copy(r) for r in self.rules]
+        self._rules = [copy.copy(r) for r in self.rules] # 这里为什么要调用copy?
         for rule in self._rules:
             rule.callback = get_method(rule.callback)
             rule.process_links = get_method(rule.process_links)

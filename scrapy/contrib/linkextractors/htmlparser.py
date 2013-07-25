@@ -10,6 +10,8 @@ from w3lib.url import safe_url_string
 from scrapy.link import Link
 from scrapy.utils.python import unique as unique_list
 
+# 直接调用Htmlparserlinkextractor的extract_links方法来处理repsonse
+
 class HtmlParserLinkExtractor(HTMLParser):
 
     def __init__(self, tag="a", attr="href", process=None, unique=False):
@@ -61,6 +63,7 @@ class HtmlParserLinkExtractor(HTMLParser):
                     self.links.append(link)
                     self.current_link = link
 
+    # current link用来保存text
     def handle_endtag(self, tag):
         self.current_link = None
 

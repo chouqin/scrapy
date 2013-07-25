@@ -6,10 +6,14 @@ See documentation in docs/topics/spiders.rst
 
 from scrapy import log
 from scrapy.http import Request
-from scrapy.utils.misc import arg_to_iter
+from scrapy.utils.misc import arg_to_iter # 代码也不是很规范，import but never been used
 from scrapy.utils.trackref import object_ref
 from scrapy.utils.url import url_is_from_spider
 
+# 整个过程：
+# 调用spider的start_requests生成requests
+# 执行request的请求，生成一系列的response
+# 调用spider的parse函数，生成新的items或者response
 
 class BaseSpider(object_ref):
     """Base class for scrapy spiders. All spiders must inherit from this
@@ -32,7 +36,9 @@ class BaseSpider(object_ref):
         method to send log messages from your spider
         """
         log.msg(message, spider=self, level=level, **kw)
+        # 从这里看log应该不是很复杂，只不过比logger多了一个spider参数
 
+    # 所以spider和crawler还不是同一个东西
     def set_crawler(self, crawler):
         assert not hasattr(self, '_crawler'), "Spider already bounded to %s" % crawler
         self._crawler = crawler
@@ -46,6 +52,7 @@ class BaseSpider(object_ref):
     def settings(self):
         return self.crawler.settings
 
+    # 生成一系列的request
     def start_requests(self):
         for url in self.start_urls:
             yield self.make_requests_from_url(url)
